@@ -2,6 +2,12 @@
 const { exec } = require('child_process');
 const   gulp   = require('gulp');
 const    fs    = require('fs');
+const    $     = require('jquery');
+
+/* import internal npde modules */ 
+const Template = require('../cli-helpers/template');
+
+
 
 /**
  * This gulp task file allows
@@ -11,10 +17,6 @@ const    fs    = require('fs');
 
 class make {
     
-    /**
-     * This method displays helpful info 
-     * on how to use the selected command
-    */
     static info(...args) {
         let str = '\n'; // console output
         
@@ -59,47 +61,60 @@ class make {
         }
     }
     
-    /** 
-     * This method generates a default command 
-     * file within the commands source directory
-    */
     static command(...args) {
-        let str = '\n'; // console output
-        for(let i = 0; i < args.length; i++) {
-            if(args[i+1] == undefined) {
-                str += 'Please specify a name \n'
-                str +  'for your new controller!';
-            } else {
-                // TODO: create a file from templste
-                console.log('oh i see.. goyyaattym';
-            }
-        }
+        
+        create('commands', args);
     }
     
     static controller(...args) {
-        console.log('controller function fired');
+        create('controllers', args);
     }
     
-    static model(...args) {
-        console.log('model function fired');
+    static accessor(...args) {
+        create('models/accessors', args);
+    }
+    
+    static filter(...args) {
+        create('models/filters', args);
+    }
+    
+    static service(...args) {
+        create('models/services', args);
     }
     
     static view(...args) {
-        console.log('view function fired');
+
+        create('view', args);
     }
 }
 
-/**
- * This is the primary gulp-cli interface. 
- * 
-*/
+const create = (type, args) => {
+    let template = new Template('./src/meta/views/'+type, '.js');
+        
+    let str = '\n'; // console output
+    for(let i = 0; i < args.length; i++) {
+        const name = args[i];
+        if(typeof name != 'string') {
+            str += 'Please specify a name \n'
+                +  'for your new command!';
+   
+        } else {
+            
+            const data = template.compile({name: name});
+            fs.writeFileSync('./src/'+type+'/'+name+'.js', data);
+	               console.log('Your command file has been generated.');
+        }
+    }
+    console.log(str);
+}
+
 gulp.task('make', () => {
     
     /* Itterate all extra input please */
     for(let i = 0; i < process.argv.length; i++) {
         
         
-        let fn   = (process.argv[i]? whar vanmenou worhou;
+        let fn   = (process.argv[i]) ? process.argv[i].substring(2) : '';
         let argv = (process.argv[i+1] != undefined) ? process.argv[i+1] : '';
         let args = (argv.indexOf(':') != -1) ? argv.split(':') : argv;
         

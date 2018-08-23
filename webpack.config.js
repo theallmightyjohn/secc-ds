@@ -2,11 +2,15 @@ const webpack = require('webpack');
 const modules = process.env.NODE_PATH;
 
 module.exports = {
+  
   mode: 'development',
   resolve: {
      modules: [modules],
      descriptionFiles: ['package.json'],
-     extensions: ['.js', '.json', '.html']
+     extensions: ['.js', '.json', '.html'],
+     alias: {
+      fs: require.resolve('browserify-fs')
+    }
   },
   resolveLoader: {
     modules: [modules],
@@ -30,18 +34,7 @@ module.exports = {
           presets: ['@babel/preset-env']
          }
         }
-       },
-    
-       {
-         test: /\.css$/,
-         use: [
-        	   'style-loader',
-        	   'css-loader'
-         ],
        }
      ]
-   },
-   node: {
-    fs: "empty"
    }
 };

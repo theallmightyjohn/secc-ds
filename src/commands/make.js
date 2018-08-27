@@ -63,45 +63,45 @@ class make {
     
     static command(...args) {
         
-        create('commands', args);
+        create('command', args);
     }
     
     static controller(...args) {
-        create('controllers', args);
+        create('controller', args);
     }
     
     static accessor(...args) {
-        create('models/accessors', args);
+        create('models/accessor', args);
     }
     
     static filter(...args) {
-        create('models/filters', args);
+        create('models/filter', args);
     }
     
     static service(...args) {
-        create('models/services', args);
+        create('models/service', args);
     }
     
     static view(...args) {
 
-        create('view', args);
+        create('view', args, '.jade');
     }
 }
 
-const create = (type, args) => {
-    let template = new Template('./src/meta/views/'+type, '.js');
+const create = (type, args, ext) => {
+    let template = new Template('./src/meta/views/'+type, 's/'+type+'.js');
         
     let str = '\n'; // console output
     for(let i = 0; i < args.length; i++) {
         const name = args[i];
         if(typeof name != 'string') {
             str += 'Please specify a name \n'
-                +  'for your new command!';
+                +  'for your new '+type+'!';
    
         } else {
             
             const data = template.compile({name: name});
-            fs.writeFileSync('./src/'+type+'/'+name+'.js', data);
+            fs.writeFileSync('./src/'+type+'s/'+name+((!ext) ? '.js' : ext), data);
 	               console.log('Your command file has been generated.');
         }
     }

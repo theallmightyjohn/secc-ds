@@ -8,6 +8,14 @@ import 'bootstrap';
 /****************************/
 import $ from 'jquery';
 
+/*******************/
+/*  import models  */
+/*******************/
+import jace from './models/filters/JACE';
+
+// execute jQueryAnimateCssExtender
+jace($);
+
 // register singletons for 
 // dependency injection
 const dependancies = {
@@ -24,17 +32,3 @@ for(let i = 0; i < controllers.length; i++) {
     controller = require('./controllers/'+controller);
     app[controller] = new controller(dependancies);
 }
-
-/*******************/
-/*  import models  */
-/*******************/
-import jace from './models/filters/JACE';
-
-// execute jQueryAnimateCssExtender
-jace($);
-
-
-/***********************/
-/*  initialize views   */
-/***********************/
-

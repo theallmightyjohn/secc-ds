@@ -11,6 +11,18 @@ class ls {
     static controllers(...args) {
         getDir('controllers');
     }
+    
+    static accessors(...args) {
+        getDir('models/accessors');
+    }
+    
+    static filters(...args) {
+        getDir('models/filters');
+    }
+    
+    static services(...args) {
+        getDir('models/services');
+    }
 }
 
 const getDir = (dir) => {

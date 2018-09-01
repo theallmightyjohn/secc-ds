@@ -4,7 +4,7 @@ const   gulp   = require('gulp');
 const    fs    = require('fs');
 const   str    = require('../cli-helpers/str');
 const recurse  = require('recursive-readdir');
-const   app    = require('../models/accessors/app');
+
 class jade {
     static compile(file, callback) {
         return new Promise(() => {

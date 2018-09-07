@@ -9,19 +9,18 @@ const   shell  = require('../cli-helpers/shell');
 
 class sass {
     static compile(f) {
-        let p = f.split('/');
+let p = f.split('/');
         let rp = p.reverse();
         let fn = rp[0];
         
-        rp[0].shift();
-        rp[0].join('/');
+        rp.shift();
+        rp.join('/');
         
-        console.log(rp[0].shift());
-        let dist = rp[0]+fn;
+        var file = fn.substr(0, fn.lastIndexOf(".")) + ".css";
 
         shell.exec('sass', [
             f,
-            'dist/'+dist
+            'dist/css/'+file
         ]);
     }
     

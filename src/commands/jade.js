@@ -3,12 +3,16 @@ const { exec } = require('child_process');
 const   gulp   = require('gulp');
 const    fs    = require('fs');
 const   str    = require('../cli-helpers/str');
+const   shell  = require('../cli-helpers/shell');
 const recurse  = require('recursive-readdir');
 
 class jade {
     static compile(file, callback) {
         return new Promise(() => {
-            exec('jade '+file+' -P');
+            shell.exec('jade', [
+            file,
+            '-P'
+        ]);
         }).then(callback());
     }
     
@@ -18,7 +22,7 @@ class jade {
                 let ext = str.getExt(files[i]);
                 
                 if(ext == 'jade') {
-                    jade.compile('./src/'+dir+'/'+files[i], () => {
+                    jade.compile(files[i], () => {
                         console.log('compiling '+files[i]+'...');
                     });
                 }

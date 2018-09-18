@@ -1,5 +1,6 @@
 /* import exteral npde modules */ 
 const { exec } = require('child_process');
+const readdir	 = require('recursive-readdir');
 const   gulp   = require('gulp');
 const    fs    = require('fs');
 
@@ -22,6 +23,16 @@ class ls {
     
     static services(...args) {
         getDir('models/services');
+    }
+    
+    static views(...args) {
+    				readdir('./src/views', ['*.html'], (err, files) => {
+    					for(let i = 0; i < files.length; i++) {
+    						let filepath = files[i].split('/');
+    						let file = filepath.reverse()[0];
+    						console.log(file.split('.')[0]);
+    					}
+    				});
     }
 }
 
